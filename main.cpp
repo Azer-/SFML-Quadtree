@@ -10,43 +10,60 @@
 
 int main()
 {
-	using namespace std;
+  using namespace std;
 
-	sf::RenderWindow app( sf::VideoMode( 800, 600, 32 ), "Quadtree" );
-	app.SetFramerateLimit( 60 );
+  float X = 800.0f;
+  float Y = 600.0f;
+  
+  int maxDepth = 0;
 
-	Quadtree quadtree( 0.0f, 0.0f, 800.0f, 600.0f, 0, 3 );
+  sf::RenderWindow app( sf::VideoMode( X, Y, 32 ), "Quadtree" );
+  app.SetFramerateLimit( 15 );
 
 
-	vector<Object> objects;
+  Quadtree quadtree( 0.0f, 0.0f, X, Y, 0, 15 );
 
-	while( app.IsOpened() ) {
-		sf::Event event;
-		sf::Vector2f mousePosition = app.ConvertCoords(app.GetInput().GetMouseX(), app.GetInput().GetMouseY());
-		while( app.GetEvent( event ) ) {
-			if ( event.Type == sf::Event::KeyPressed ) {
-				if ( event.Key.Code == sf::Key::Escape ) {
-					app.Close();
-				}
-			}
-			if ( event.Type == sf::Event::MouseButtonPressed ) {
-				objects.push_back( Object( mousePosition.x, mousePosition.y, 32, 32 ) );
-			}
-		}
-		app.Clear();
+  vector<Object> objects;
 
-		for ( int n = 0; n < objects.size(); ++n ) {
-			quadtree.AddObject( &objects[n] );
-			objects[n].Draw( app );
-		}
-		quadtree.Draw( app );
+//  for (int i = 50; i > 0 ; --i)
+//  {
+//    objects.push_back( Object( rand() % ( (int) X ), rand() % ( (int) Y ), 1, 1 ) );
+//  }
 
-		vector<Object*> returnObjects = quadtree.GetObjectsAt( mousePosition.x, mousePosition.y );
-		cout << returnObjects.size() << endl;
-		quadtree.Clear();
 
-		app.Display();
-	}
+  while ( app.IsOpened() )
+  {
+    sf::Event event;
+    sf::Vector2f mousePosition = app.ConvertCoords(app.GetInput().GetMouseX(), app.GetInput().GetMouseY());
+    while ( app.GetEvent( event ) )
+    {
+      if ( event.Type == sf::Event::KeyPressed )
+      {
+        if ( event.Key.Code == sf::Key::Escape )
+        {
+          app.Close();
+        }
+      }
+      if ( app.GetInput().IsMouseButtonDown( sf::Mouse::Left ) )
+      {
+        objects.push_back( Object( mousePosition.x, mousePosition.y, 1, 1 ) );
+      }
+    }
+    app.Clear();
 
-	return 0;
+    for ( int n = 0; n < objects.size(); ++n )
+    {
+      quadtree.AddObject( &objects[n] );
+      objects[n].Draw( app );
+    }
+    quadtree.Draw( app );
+
+    vector<Object*> returnObjects = quadtree.GetObjectsAt( mousePosition.x, mousePosition.y );
+    cout << returnObjects.size() << endl;
+    quadtree.Clear();
+
+    app.Display();
+  }
+
+  return 0;
 }
