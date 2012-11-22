@@ -2,6 +2,7 @@
 #define __QUADTREE_H__
 
 #include <vector>
+#include <atomic>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Shape.hpp>
 #include <SFML/Graphics/String.hpp>
