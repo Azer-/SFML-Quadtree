@@ -15,3 +15,8 @@ build
 *~*
 kdev*
 CMakeCache*
+nbproject
+Makefile
+CMakeFiles
+.cproject
+cmake_install.cmake

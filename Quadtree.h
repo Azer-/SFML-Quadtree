@@ -11,34 +11,34 @@ using namespace std;
 class Quadtree;
 class Object;
 
-class Quadtree {
+class Quadtree  {
 public:
-	Quadtree( float x, float y, float width, float height, int level, int maxLevel );
+	Quadtree( float x, float y, float width, float height, int level, int* maxLevel );
 
-	void	AddObject( Object *object );
+	void            AddObject( Object *object );
 	vector<Object*>	GetObjectsAt( float x, float y );
-	void	Clear();
+	void            Clear();
 
-	void	Draw( sf::RenderTarget &canvas );
+	void            Draw( sf::RenderTarget &canvas );
 
 private:
-	float	x;
-	float	y;
-	float	width;
-	float	height;
+	float           x;
+	float           y;
+	float           width;
+	float           height;
 	int		level;
-	int		maxLevel;
+	int* 		maxLevel;
 	vector<Object*>	objects;
 
 	Quadtree *	parent;
 	Quadtree *	NW;
 	Quadtree *	NE;
 	Quadtree *	SW;
-	Quadtree *	SE;
-
+        Quadtree *	SE;
+        
 	sf::Shape	shape;
 
-	bool	Contains( Quadtree *child, Object *object );
+	bool            Contains( Quadtree *child, Object *object );
 };
 
 #endif
